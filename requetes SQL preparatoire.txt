@@ -1,13 +1,37 @@
-SELECT c.customer_unique_id,
-       julianday((SELECT MAX(order_purchase_timestamp) FROM orders)) - julianday(MAX(o.order_purchase_timestamp)) AS recency,
-       COUNT(DISTINCT o.order_id) AS frequency,
-       SUM(op.payment_value) AS total_spent,
-       AVG(orev.review_score) AS avg_review_score,
-       COUNT(DISTINCT oi.product_id) AS product_variety,
-       GROUP_CONCAT(DISTINCT op.payment_type) AS payment_methods
+SELECT
+    c.customer_unique_id,
+    julianday((SELECT MAX(order_purchase_timestamp) FROM orders)) - julianday(MAX(o.order_purchase_timestamp)) AS recency,
+    COUNT(DISTINCT o.order_id) AS frequency,
+    SUM(op.payment_value) AS total_spent,
+    AVG(orev.review_score) AS avg_review_score,
+    COUNT(DISTINCT oi.product_id) AS product_variety,
+    MAX(o.order_purchase_timestamp) as order_purchase_timestamp,
+    pm.payment_methods
 FROM orders o
 LEFT JOIN customers c ON o.customer_id = c.customer_id
 LEFT JOIN order_pymts op ON o.order_id = op.order_id
 LEFT JOIN (SELECT DISTINCT order_id, product_id FROM order_items) oi ON o.order_id = oi.order_id
 LEFT JOIN order_reviews orev ON o.order_id = orev.order_id
+LEFT JOIN (
+    SELECT
+        customer_unique_id,
+        payment_type AS payment_methods
+    FROM (
+        SELECT
+            customer_unique_id,
+            payment_type,
+            ROW_NUMBER() OVER (
+                PARTITION BY customer_unique_id
+                ORDER BY COUNT(*) DESC
+            ) as rn
+        FROM (
+            SELECT *
+            FROM order_pymts
+            LEFT JOIN orders ON order_pymts.order_id = orders.order_id
+            LEFT JOIN customers ON orders.customer_id = customers.customer_id
+        )
+        GROUP BY customer_unique_id, payment_type
+    )
+    WHERE rn = 1
+) pm ON c.customer_unique_id = pm.customer_unique_id
 GROUP BY c.customer_unique_id;
