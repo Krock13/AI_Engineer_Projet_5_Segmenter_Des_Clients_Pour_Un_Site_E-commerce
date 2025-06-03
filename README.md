@@ -25,13 +25,18 @@ ainsi que les requêtes SQL qui alimentent le dashboard interne.
 
 ```
 .
-├── extract.csv                    # Données brutes (échantillon anonymisé)
-├── prepared_customer_data.csv     # Jeu de données prêt pour la modélisation
-├── notebook_exploration.ipynb     # Analyse exploratoire (EDA)
-├── notebook_essais.ipynb          # Tests de clustering (K-Means, DBSCAN…)
-├── notebook_simulation.ipynb      # Simulation de stabilité & fréquence MAJ
-├── requetes_SQL/                  # Scripts SQL pour le dashboard
-└── README.md                      # <- VOUS ÊTES ICI
+├── .gitignore
+├── 01.notebook_exploration.ipynb           # Analyse exploratoire (EDA)
+├── 02.notebook_essais.ipynb                # Tests de clustering (K-Means, DBSCAN…)
+├── 03.notebook_simulation.ipynb            # Simulation de stabilité & fréquence MAJ
+├── Projet 5.pdf                            # Slide de présentation
+├── extract.csv                             # Données brutes (échantillon anonymisé)
+├── prepared_customer_data.csv              # Jeu de données prêt pour la modélisation
+├── requetes SQL première partie.txt        # Scripts SQL des demandes spécifiques
+├── requetes SQL preparatoire.txt           # Scripts SQL pour l'extraction des données
+├── requirements.txt                        # Bibliothéques
+├── script.sql                              # Scripts SQL des demandes spécifiques (format sql)
+└── README.md                               # <- VOUS ÊTES ICI
 ```
 
 ---
