@@ -56,7 +56,6 @@ cd AI_Engineer_Projet_5_Segmenter_Des_Clients_Pour_Un_Site_E-commerce
 python -m venv .venv && source .venv/bin/activate   # Linux/Mac
 python -m venv .venv && .\.venv\Scripts\activate   # Windows (cmd)
 pip install -r requirements.txt
-jupyter lab
 ```
 
 ---
@@ -98,15 +97,6 @@ jupyter lab
 3. **Maintenance**  
    `notebook_simulation.ipynb` simule l’évolution des clusters toutes les 2 semaines  
    et trace l’**Adjusted Rand Index** pour recommander la fréquence de mise à jour.
-
----
-
-## Pistes d’amélioration
-
-* **Pipeline MLOps** : intégrer `scikit‑learn` + `MLflow` → registry & modèle versionné.  
-* **API REST** : exposer un endpoint FastAPI pour scorer un nouveau client en temps réel.  
-* **Dashboard BI** : passer de SQL + notebooks à un tableau de bord (Looker / Metabase) alimenté par le modèle en production.  
-* **Tests & CI** : ajouter `pytest`, `tox` et un workflow GitHub Actions (flake8, black).
 
 ---
 
